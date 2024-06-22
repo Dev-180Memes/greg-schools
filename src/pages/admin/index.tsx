@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Layout from '@/components/Dashboard/Admin/Layout';
 
 const AdminDashboard: React.FC = () => {
   return (
-    <div>
+    <Layout>
       AdminDashboard
-    </div>
+    </Layout>
   )
 }
 
