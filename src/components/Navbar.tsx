@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
                 </svg>
             </button>
         </div>
-        <ul className={`flex-col absolute top-16 right-5 w-full bg-white  md: items-center space-x-5 ${menuOpen ? 'flex' : 'hidden'}`}>
+        <ul className={`flex-col absolute z-10 top-16 right-5 w-full bg-white pb-4 rounded-xl md: items-center space-x-5 ${menuOpen ? 'flex' : 'hidden'}`}>
           <li className="text-center py-2 md:py-0">
             <Link href="#" className="text-[#4A4A4A] font-bold">Home</Link>
           </li>
