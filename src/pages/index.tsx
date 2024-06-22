@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -150,7 +151,7 @@ const Home: React.FC = () => {
           </div>
           <div className="md:w-1/2 flex justify-center items-center mb-8 md:mb-0">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[30px]">
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-center md:items-start">
                 <div className="bg-blue-400 rounded-lg p-4">
                   <Image 
                     src={"/images/resources.png"}
@@ -161,7 +162,7 @@ const Home: React.FC = () => {
                 </div>
                 <p className="text-gray-700 mt-2">Upload Materials</p>
               </div>
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-center md:items-start">
                 <div className="bg-yellow-400 rounded-lg p-4">
                   <Image 
                     src={"/images/questions.png"}
@@ -172,7 +173,7 @@ const Home: React.FC = () => {
                 </div>
                 <p className="text-gray-700 mt-2">Access Past Questions</p>
               </div>
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-center md:items-start">
                 <div className="bg-pink-400 rounded-lg p-4">
                   <Image 
                     src={"/images/universities.png"}
@@ -184,7 +185,7 @@ const Home: React.FC = () => {
                 </div>
                 <p className="text-gray-700 mt-2">Study Resources</p>
               </div>
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-center md:items-start">
                 <div className="bg-green-400 rounded-lg p-4">
                   <Image 
                     src={"/images/universities.png"}
@@ -203,7 +204,7 @@ const Home: React.FC = () => {
 
       <section className="py-12 px-6 md:py-12 bg-blue-300">
         <div className="container mx-auto px-6">
-          <h2 className="text-center text-2xl font-bold mb-8">Testimonial</h2>
+          <h2 className="text-center text-2xl font-bold mb-8 text-white">Testimonial</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="flex items-center mb-4">
@@ -248,67 +249,78 @@ const Home: React.FC = () => {
       </section>
 
       <section className="py-12 px-6 md:py-12 bg-white">
-        <div className="container mx-auto px-6">
-          <h2 className="text-center md:text-left text-2xl font-bold mb-8 text-blue-500">Send us a message</h2>
-          <form className="w-full max-w-lg mx-auto md:mx-0">
-            <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
-                  Name
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-first-name"
-                  type="text"
-                  placeholder="Enter Full Name"
-                />
+        <div className="container mx-auto px-6 flex">
+          <div className="w-full md:w-1/2">
+            <h2 className="text-center md:text-left text-2xl font-bold mb-8 text-blue-500">Send us a message</h2>
+            <form className="w-full max-w-lg mx-auto md:mx-0">
+              <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                  <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
+                    Name
+                  </label>
+                  <input
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-first-name"
+                    type="text"
+                    placeholder="Enter Full Name"
+                  />
+                </div>
+                <div className="w-full md:w-1/2 px-3">
+                  <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-email">
+                    Email
+                  </label>
+                  <input
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-email"
+                    type="email"
+                    placeholder="example@gmail.com"
+                  />
+                </div>
               </div>
-              <div className="w-full md:w-1/2 px-3">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-email">
-                  Email
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-email"
-                  type="email"
-                  placeholder="example@gmail.com"
-                />
+              <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="w-full px-3">
+                  <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-subject">
+                    Subject
+                  </label>
+                  <input
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-subject"
+                    type="text"
+                    placeholder="Subject"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full px-3">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-subject">
-                  Subject
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-subject"
-                  type="text"
-                  placeholder="Subject"
-                />
+              <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="w-full px-3">
+                  <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-message">
+                    Message
+                  </label>
+                  <textarea
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-message"
+                    placeholder="Message"
+                    rows={5}
+                  ></textarea>
+                </div>
               </div>
-            </div>
-            <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full px-3">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-message">
-                  Message
-                </label>
-                <textarea
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-message"
-                  placeholder="Message"
-                  rows={5}
-                ></textarea>
+              <div className="flex items-center justify-center md:justify-start">
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded-full focus:outline-none focus:shadow-outline" type="button">
+                  Send
+                </button>
               </div>
-            </div>
-            <div className="flex items-center justify-center md:justify-start">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded-full focus:outline-none focus:shadow-outline" type="button">
-                Send
-              </button>
-            </div>
-          </form>
+            </form>
+          </div>
+          <div className="hidden md:flex w-1/2">
+            <Image 
+              src="/images/student.png"
+              alt="Contact Us"
+              width={500}
+              height={500}
+            />
+          </div>
         </div>
       </section>
+      <Footer />
     </div>
   )
 }
