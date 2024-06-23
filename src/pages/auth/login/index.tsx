@@ -79,7 +79,7 @@ const Login: React.FC = () => {
           <div className="text-center mt-6">
             <p className="text-sm">
                 Don&apos;t have an account?{' '}
-                <Link href="#" className="text-blue-500 hover:underline">Sign Up</Link>
+                <Link href="/auth/signup" className="text-blue-500 hover:underline">Sign Up</Link>
             </p>
           </div>
         </div>
@@ -90,7 +90,7 @@ const Login: React.FC = () => {
           alt="Student"
           width={500}
             height={500}
-          className="rounded-r-lg h-[100%] w-auto object-cover"
+          className="h-[100%] w-auto object-cover"
         />
       </div>
     </div>
