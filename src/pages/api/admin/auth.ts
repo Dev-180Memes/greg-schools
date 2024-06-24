@@ -31,7 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<AdminLoginRespo
             return res.status(401).json({ success: false, message: "Invalid credentials" });
         }
 
-        const token = jwt.sign({ userId: admin._id }, process.env.JWT_SECRET as string, { expiresIn: "1h" });
+        const token = jwt.sign({ userId: admin._id }, process.env.JWT_SECRET as string, { expiresIn: "24h" });
 
         return res.status(200).json({ success: true, token });
     } catch (error) {
