@@ -13,6 +13,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
   const isActive = (path: string) => router.pathname === path;
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    router.push('/admin/auth');
+  }
+
   return (
     <>
       <div
@@ -42,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             </svg>
             Dashboard
           </Link>
-          <Link href={"/admin/"} className={`py-2 px-4 flex items-center text-white rounded-md mb-2 ${isActive('/') ? 'bg-blue-700' : 'hover:bg-blue-700'}`}>
+          <Link href={"/admin/notification"} className={`py-2 px-4 flex items-center text-white rounded-md mb-2 ${isActive('/admin/notification') ? 'bg-blue-700' : 'hover:bg-blue-700'}`}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-6 w-6 mr-3">
               <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
             </svg>
@@ -74,7 +79,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           </Link>
         </nav>
         <div className="mt-auto">
-          <button className="py-2 px-4 flex items-center text-white hover:bg-blue-700 rounded-md">
+          <button className="py-2 px-4 flex items-center text-white hover:bg-blue-700 rounded-md" onClick={handleLogout}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6 mr-3">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
             </svg>
