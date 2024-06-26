@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '@/components/Dashboard/Admin/Layout';
 import { FaX } from 'react-icons/fa6';
+import { toast, Toaster } from 'react-hot-toast';
 
 const Notification: React.FC = () => {
     const [title, setTitle] = React.useState<string>('');
@@ -13,9 +14,32 @@ const Notification: React.FC = () => {
         setShowConfirmationModal(true);
     };
 
-    const handleConfirmSend = () => {
+    const handleConfirmSend = async () => {
         setShowConfirmationModal(false);
-        setShowSuccessModal(true);
+        // setShowSuccessModal(true);
+
+        const data = {
+            title,
+            body,
+        };
+
+        const response = await fetch('/api/admin/notification', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        const responseData = await response.json();
+
+        if (responseData.success) {
+            setShowSuccessModal(true);
+            setTitle('');
+            setBody('');
+        } else {
+            toast.error(responseData.message);
+        }
     }
 
   return (
@@ -104,6 +128,8 @@ const Notification: React.FC = () => {
                 </div>
             </div>
         )}
+
+        <Toaster />
     </Layout>
   )
 }
