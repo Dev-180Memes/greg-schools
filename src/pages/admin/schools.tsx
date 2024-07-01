@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "@/components/Dashboard/Admin/Layout";
 import { School } from "@/types/types";
 import Pagination from "@/components/Pagination";
+import { FaX } from "react-icons/fa6";
 
 const PAGE_SIZE = 10;
 
@@ -100,6 +101,12 @@ const Schools: React.FC = () => {
     const [schools, setSchools] = React.useState<School[]>([]);
     const [page, setPage] = React.useState<number>(1);
     const [totalPages, setTotalPages] = React.useState<number>(1);
+    const [showAddSchoolModal, setShowAddSchoolModal] = React.useState<boolean>(false);
+    const [name, setName] = React.useState<string>('');
+    const [collegeFaculty, setCollegeFaculty] = React.useState<number>(0);
+    const [departments, setDepartments] = React.useState<number>(0);
+    const [materials, setMaterials] = React.useState<number>(0);
+    const [dateRegistered, setDateRegistered] = React.useState<string>('');
 
     React.useEffect(() => {
         setSchools(schoolsData);
@@ -111,14 +118,31 @@ const Schools: React.FC = () => {
         setPage(page);
     }
 
+    const handleAddSchool = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const data = {
+            name,
+            collegeFaculty,
+            departments,
+            materials,
+            dateRegistered,
+        };
+
+        console.log(data);
+    }
+
     const paginatedSchools = schools.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
     return (
         <Layout>
-            <div className="flex flex-col space-y-2 h-full">
+            <div className="flex flex-col space-y-2">
                 <div className="flex flex-row justify-between">
                     <h1 className="text-2xl font-semibold text-blue-500">Schools</h1>
-                    <button className="px-4 py-2 border border-blue-500 rounded-lg text-blue-500">Add School</button>
+                    <button 
+                        className="px-4 py-2 border border-blue-500 rounded-lg text-blue-500"
+                        onClick={() => setShowAddSchoolModal(true)}
+                    >Add School</button>
                 </div>
                 {schools.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-full"> 
@@ -140,7 +164,6 @@ const Schools: React.FC = () => {
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">College/Faculty</th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Departments</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Materials</th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date Registered</th>
                                     </tr>
                                 </thead>
@@ -150,7 +173,6 @@ const Schools: React.FC = () => {
                                             <td className="px-6 py-4">{school.name}</td>
                                             <td className="px-6 py-4">{school.collegeFaculty}</td>
                                             <td className="px-6 py-4">{school.departments}</td>
-                                            <td className="px-6 py-4">{school.materials}</td>
                                             <td className="px-6 py-4">{school.dateRegistered}</td>
                                         </tr>
                                     ))}
@@ -161,6 +183,69 @@ const Schools: React.FC = () => {
                     </div>
                 )}
             </div>
+
+            {showAddSchoolModal && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center md:w-1/3">
+                        <div className="flex w-full items-end justify-end">
+                            <button
+                                className="bg-gray-200 p-2 flex items-end justify-end rounded-full"
+                                onClick={() => setShowAddSchoolModal(false)}
+                            >
+                                <FaX />
+                            </button>
+                        </div>
+                        <h2 className='text-xl font-semibold text-blue-500 mb-4'>Add School</h2>
+                        <form className="w-full space-y-4" onSubmit={handleAddSchool}>
+                            <div className="flex flex-col w-full space-y-2">
+                                <label className="text-sm font-medium text-gray-500" htmlFor="name">Name</label>
+                                <input 
+                                    type="text" 
+                                    id="name" 
+                                    name="name" 
+                                    className="border border-gray-300 rounded-lg p-2 w-full" 
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                            </div>
+                            <div className="flex flex-col w-full space-y-2">
+                                <label className="text-sm font-medium text-gray-500" htmlFor="collegeFaculty">College/Faculty</label>
+                                <input 
+                                    type="number" 
+                                    id="collegeFaculty" 
+                                    name="collegeFaculty" 
+                                    className="border border-gray-300 rounded-lg p-2 w-full" 
+                                    value={collegeFaculty}
+                                    onChange={(e) => setCollegeFaculty(parseInt(e.target.value))}
+                                />
+                            </div>
+                            <div className="flex flex-col w-full space-y-2">
+                                <label className="text-sm font-medium text-gray-500" htmlFor="departments">Departments</label>
+                                <input 
+                                    type="number" 
+                                    id="departments" 
+                                    name="departments" 
+                                    className="border border-gray-300 rounded-lg p-2 w-full" 
+                                    value={departments}
+                                    onChange={(e) => setDepartments(parseInt(e.target.value))}
+                                />
+                            </div>
+                            <div className="flex flex-col w-full space-y-2">
+                                <label className="text-sm font-medium text-gray-500" htmlFor="dateRegistered">Date Registered</label>
+                                <input 
+                                    type="date" 
+                                    id="dateRegistered" 
+                                    name="dateRegistered" 
+                                    className="border border-gray-300 rounded-lg p-2 w-full" 
+                                    value={dateRegistered}
+                                    onChange={(e) => setDateRegistered(e.target.value)}
+                                />
+                            </div>
+                            <button type="submit" className="bg-blue-500 text-white rounded-lg p-2 w-full">Add School</button>
+                        </form>
+                    </div>
+                </div>
+            )}
         </Layout>
     )
 };
