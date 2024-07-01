@@ -6,7 +6,7 @@ const Schools: React.FC = () => {
         <Layout>
             <div className="flex flex-col space-y-2">
                 <div>
-                    <h1 className="text-2xl font-semibold text-blue-500">Schools</h1>
+                    <h1 className="text-2xl font-semibold text-blue-500">Students</h1>
                 </div>
             </div>
         </Layout>

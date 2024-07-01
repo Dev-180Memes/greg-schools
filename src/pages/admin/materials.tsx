@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "@/components/Dashboard/Admin/Layout";
 import { Material } from "@/types/types";
 import { FaEllipsisV } from 'react-icons/fa';
+import Pagination from "@/components/Pagination";
 
 const PAGE_SIZE = 10;
 
@@ -149,7 +150,7 @@ const Materials: React.FC = () => {
         <div className="flex flex-col space-y-2 w-full">
           <h1 className="text-2xl font-semibold text-blue-500">Materials</h1>
           <div className="border border-gray-400 rounded-xl md:rounded-lg p-3 md:p-7 w-full">
-            <div className="relative overflow-x-auto">
+            <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                 <thead>
                     <tr>
@@ -199,34 +200,6 @@ const Materials: React.FC = () => {
           </div>
         </div>
       </Layout>
-    );
-};
-
-interface PaginationProps {
-    currentPage: number;
-    totalPages: number;
-    onPageChange: (page: number) => void;
-}
-
-const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
-    const pages = [];
-
-    for (let i = 1; i <= totalPages; i++) {
-        pages.push(
-            <button 
-                key={i}
-                className={`px-4 py-2 border ${currentPage === i ? 'bg-blue-500 text-white' : 'text-gray-700 bg-white'} rounded-mb mx-1`}
-                onClick={() => onPageChange(i)}
-            >
-                {i}
-            </button>
-        );
-    }
-
-    return (
-        <div className="flex justify-center space-x-2 mt-4">
-            {pages}
-        </div>
     );
 };
 
