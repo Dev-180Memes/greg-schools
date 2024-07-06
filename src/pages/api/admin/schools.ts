@@ -11,7 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<SchoolApiRespon
         try {
             const { name, collegeFaculty, departments }: SchoolApiRequest = req.body;
             if (!name || !collegeFaculty || !departments) {
-                return handleError(req, res, "Please fill in all fields");
+                return res.status(400).json({ success: false, message: "All fields are required" });
             }
             const school: ISchool = new School({
                 name,

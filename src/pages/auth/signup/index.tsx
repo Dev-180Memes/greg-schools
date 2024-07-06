@@ -1,12 +1,155 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import SignupPageOne from '@/components/Signup/PageOne';
+import SignupPageTwo from '@/components/Signup/PageTwo';
+import { Toaster, toast } from 'react-hot-toast';
+import { ISchool } from '@/models/school.model';
+import { useRouter } from 'next/router';
 
 const Signup: React.FC = () => {
-    const [role, setRole] = useState<'staff'| 'student' | ''>('');
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const [role, setRole] = useState<'staff'| 'student' | ''>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [page, setPage] = useState< 1 | 2>(2);
+  const [schools, setSchools] = useState<ISchool[]>([]);
+  const [university, setUniversity] = useState<string>('');
+  const [department, setDepartment] = useState<string>('');
+  const [faculty, setFaculty] = useState<string>('');
+  const [level, setLevel] = useState<string>('');
+  const [otp, setOtp] = useState<string>(''); 
+  const [showOtpDialog, setShowOtpDialog] = useState<boolean>(false);
+  const [timer, setTimer] = useState<number>(60)
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchSchools = async () => {
+      const response = await fetch('/api/admin/schools');
+      const data = await response.json();
+      if (data.success) {
+        setSchools(data.data);
+      } else {
+        toast(data.message);
+      }
+    }
+
+    fetchSchools();
+  }, []);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (showOtpDialog && timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000)
+    }
+    return () => clearInterval(interval);
+  }, [showOtpDialog, timer]);
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (name === '' || email === '' || password === '' || confirmPassword === '' || role === '') {
+      return toast.error('All fields are required');
+    }
+
+    if (password !== confirmPassword) {
+      return toast.error('Passwords do not match');
+    }
+
+    if (page === 2 && (university === '' || department === '' || faculty === '' || level === '')) {
+      return toast.error('All fields are required');
+    }
+
+    const data = {
+      name,
+      email,
+      password,
+      role,
+      university,
+      department,
+      faculty,
+      level,
+      step: 'sendOtp'
+    }
+    console.log(data)
+    const response = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    const res = await response.json();
+
+    if (res.success) {
+      setOtp('');
+      setShowOtpDialog(true);
+      setTimer(60);
+    } else {
+      toast.error(res.message);
+    }
+  }
+
+  const handleVerifyOtp = async () => {
+    if (otp === '') {
+      return toast.error('OTP is required');
+    }
+
+    const data = {
+      email,
+      otp,
+      step: 'verifyOtp',
+    };
+
+    const response = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    const res = await response.json();
+
+    if (res.success) {
+      const { token } = res;
+      localStorage.setItem('token', token);
+      router.push('/dashboard');
+    } else {
+      toast.error(res.message);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    const data = {
+      email,
+      step: 'resendOtp',
+    };
+
+    const response = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    const res = await response.json();
+
+    if (res.success) {
+      toast.success('OTP sent');
+      setTimer(60);
+    } else {
+      toast.error(res.message);
+    }
+  }
 
   return (
     <div className='min-h-screen flex flex-col md:flex-row'>
@@ -32,123 +175,52 @@ const Signup: React.FC = () => {
         <div className="relative bg-white p-8 rounded-lg w-full max-w-md">
           <h2 className="text-center text-2xl font-bold text-blue-500 mb-6">Create Account</h2>
           <div className="flex items-center justify-center mb-4 space-x-1">
-            <span className="bg-blue-500 h-1 w-1/2 rounded-full"></span>
-            <span className="bg-gray-300 h-1 w-1/2 rounded-full"></span>
+            {page === 1 ? (
+              <>
+                <span className="bg-blue-500 h-1 w-1/2 rounded-full"></span>
+                <span className="bg-gray-300 h-1 w-1/2 rounded-full"></span>
+              </>
+            ) : (
+              <>
+                <span className="bg-gray-300 h-1 w-1/2 rounded-full"></span>
+                <span className="bg-blue-500 h-1 w-1/2 rounded-full"></span>
+              </>
+            )}
             {/* <span className="text-gray-500 ml-2">1 of 2</span> */}
           </div>
-          <form className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                Name
-              </label>
-              <div className="mt-1">
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email
-              </label>
-              <div className="mt-1">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="role" className="block text-sm font-medium text-gray-700">
-                Role
-              </label>
-              <div className="mt-1 flex space-x-4">
-                <button
-                  type="button"
-                  className={`py-2 px-4 border ${
-                    role === 'staff' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'
-                  } border-gray-300 rounded-md shadow-sm focus:outline-none`}
-                  onClick={() => setRole('staff')}
-                >
-                  Staff
-                </button>
-                <button
-                  type="button"
-                  className={`py-2 px-4 border ${
-                    role === 'student' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'
-                  } border-gray-300 rounded-md shadow-sm focus:outline-none`}
-                  onClick={() => setRole('student')}
-                >
-                  Student
-                </button>
-              </div>
-            </div>
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="mt-1 relative">
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-                <span
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <FaEyeSlash className="text-gray-500" />
-                  ) : (
-                    <FaEye className="text-gray-500" />
-                  )}
-                </span>
-              </div>
-            </div>
-            <div>
-              <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700">
-                Confirm Password
-              </label>
-              <div className="mt-1 relative">
-                <input
-                  id="confirm-password"
-                  name="confirm-password"
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-                <span
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? (
-                    <FaEyeSlash className="text-gray-500" />
-                  ) : (
-                    <FaEye className="text-gray-500" />
-                  )}
-                </span>
-              </div>
-            </div>
-            <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Next
-              </button>
-            </div>
-          </form>
+          {page === 1 && (
+            <SignupPageOne 
+              role={role}
+              setRole={setRole}
+              showPassword={showPassword}
+              showConfirmPassword={showConfirmPassword}
+              setShowPassword={setShowPassword}
+              setShowConfirmPassword={setShowConfirmPassword}
+              name={name}
+              setName={setName}
+              email={email}
+              setEmail={setEmail}
+              password={password}
+              setPassword={setPassword}
+              confirmPassword={confirmPassword}
+              setConfirmPassword={setConfirmPassword}
+              setPage={setPage}
+            />
+          )}
+          {page === 2 && (
+            <SignupPageTwo 
+              schools={schools}
+              university={university}
+              setUniversity={setUniversity}
+              department={department}
+              setDepartment={setDepartment}
+              faculty={faculty}
+              setFaculty={setFaculty}
+              level={level}
+              setLevel={setLevel}
+              handleSignup={handleSignup}
+            />
+          )}
           <div className="text-center mt-6">
             <p className="text-sm">
               Already have an account?{' '}
@@ -159,6 +231,54 @@ const Signup: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {showOtpDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center md:w-1/3">
+            <h2 className="text-2xl font-bold text-blue-500 mb-4">OTP Verification</h2>
+            <p className="text-center mb-4">Please enter the 6-digit code sent to your email</p>
+            <div className="flex justify-center space-x-2 mb-4">
+              {[...Array(6)].map((_, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  maxLength={1}
+                  value={otp[index] || ''}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9]/, '');
+                    if (value) {
+                      const newOtp = otp.split('');
+                      newOtp[index] = value;
+                      setOtp(newOtp.join(''));
+                      if (index < 5) {
+                        (e.target.nextSibling as HTMLElement)?.focus();
+                      }
+                    }
+                  }}
+                  className="w-10 h-10 text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              ))}
+            </div>
+            <button
+              onClick={handleVerifyOtp}
+              className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Verify
+            </button>
+            <div className="mt-4 text-sm">
+              Didn&apos;t receive code?{' '}
+              {timer > 0 ? (
+                <span className="text-gray-500">Resend Code in {`00:${timer.toString().padStart(2, '0')}`}</span>
+              ) : (
+                <button onClick={handleResendOtp} className="text-blue-500 hover:underline">
+                  Resend Code
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      <Toaster />
     </div>
   )
 }
