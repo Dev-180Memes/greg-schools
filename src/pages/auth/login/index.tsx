@@ -2,13 +2,45 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useRouter } from 'next/router';
+import { Toaster, toast } from 'react-hot-toast';
 
 const Login: React.FC = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+
+    const router = useRouter();
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
     };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      const data = {
+        email,
+        password,
+      };
+
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const res = await response.json();
+
+      if (res.success) {
+        localStorage.setItem('token', res.token);
+        router.push('/dashboard');
+      } else {
+        toast.error(res.message);
+      }
+    }
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
@@ -24,7 +56,7 @@ const Login: React.FC = () => {
         </div>
         <div className="relative bg-white p-8 rounded-lg w-full max-w-md">
           <h2 className="text-center text-2xl font-bold text-blue-500 mb-6">Sign In</h2>
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email
@@ -35,6 +67,8 @@ const Login: React.FC = () => {
                   name="email"
                   type="email"
                   autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
@@ -48,8 +82,10 @@ const Login: React.FC = () => {
                 <input
                   id="password"
                   name="password"
-                    type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
@@ -65,15 +101,25 @@ const Login: React.FC = () => {
               </div>
             </div>
             <div className="text-right">
-                <Link href={"#"} className="text-sm text-blue-500 hover:underline">Forgot password?</Link>
+                <Link href={"/auth/forgot-password"} className="text-sm text-blue-500 hover:underline">Forgot password?</Link>
             </div>
             <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Sign In
-              </button>
+              {email === '' || password === '' ? (
+                <button
+                  type="submit"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-500 cursor-not-allowed"
+                  disabled
+                >
+                  Sign In
+                </button>
+              ): (
+                <button
+                  type="submit"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Sign In
+                </button>
+              )}
             </div>
           </form>
           <div className="text-center mt-6">
@@ -93,6 +139,7 @@ const Login: React.FC = () => {
           className="h-[100%] w-auto object-cover"
         />
       </div>
+      <Toaster />
     </div>
   );
 };

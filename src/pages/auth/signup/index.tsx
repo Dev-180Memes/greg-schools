@@ -77,7 +77,9 @@ const Signup: React.FC = () => {
       level,
       step: 'sendOtp'
     }
-    console.log(data)
+
+    // console.log(data)
+    
     const response = await fetch('/api/auth/signup', {
       method: 'POST',
       headers: {
