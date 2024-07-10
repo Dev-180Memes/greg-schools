@@ -1,6 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Dashboard/Admin/Layout';
 import { FaUsers, FaSchool, FaBookOpen } from "react-icons/fa";
+import { IUser } from '@/models/user.model';
+import toast from 'react-hot-toast';
+import { ISchool } from '@/models/school.model';
+import { IMaterial } from '@/models/material.model';
 
 interface CardProps {
   icon: React.ReactNode;
@@ -23,6 +27,50 @@ const Cards: React.FC<CardProps> = ({ icon, title, value }) => {
 };
 
 const AdminDashboard: React.FC = () => {
+  const [users, setUsers] = useState<IUser[]>([]);
+  const [schools, setSchools] = useState<ISchool[]>([]);
+  const [materials, setMaterials] = useState<IMaterial[]>([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const res = await fetch('/api/auth/login');
+      const data = await res.json();
+
+      if (data.success) {
+        setUsers(data.users);
+      } else {
+        toast.error(data.message);
+      }
+    };
+
+    fetchUsers();
+
+    const fetchSchools = async () => {
+      const res = await fetch('/api/admin/schools');
+      const data = await res.json();
+
+      if (data.success) {
+        setSchools(data.data);
+      } else {
+        toast.error(data.message);
+      }
+    };
+
+    fetchSchools();
+
+    const fetchMaterials = async () => {
+      const res = await fetch('/api/materials/add');
+      const data = await res.json();
+
+      if (data.success) {
+        setMaterials(data.data);
+      } else {
+        toast.error(data.message);
+      }
+    }
+
+    fetchMaterials();
+  }, []);
 
   return (
     <Layout>
@@ -32,17 +80,17 @@ const AdminDashboard: React.FC = () => {
           <Cards 
             icon={<FaUsers className='size-6' />}
             title='Total Users'
-            value={500}
+            value={users.length}
           />
           <Cards 
             icon={<FaSchool className='size-6' />}
             title='Schools'
-            value={100}
+            value={schools.length}
           />
           <Cards 
             icon={<FaBookOpen className='size-6' />}
             title='Materials'
-            value={200}
+            value={materials.length}
           />
         </div>
       </div>

@@ -1,0 +1,67 @@
+import React, { useState, useEffect, Key } from 'react';
+import Layout from '@/components/Dashboard/User/Layout';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Image from 'next/image';
+import { IDepartment } from '@/models/department.model';
+import { Toaster, toast } from 'react-hot-toast';
+
+interface UniversityProps {
+    department: IDepartment;
+}
+
+const Cards: React.FC<UniversityProps> = ({ department }) => (
+  <Link href={`/dashboard/levels/${department._id}`} className='bg-gray-200 p-5 w-full md:w-1/3 rounded-lg'>
+    <div className="px-2 py-2 w-full flex justify-center items-center rounded-full">
+      <Image 
+        src={"/images/funaab.png"}
+        alt="funaab logo"
+        width={120}
+        height={120}
+      />
+    </div>
+    <div className="mt-3 flex justify-center items-center">
+      <h2 className="text-xl text-black text-center">{department.name}</h2>
+    </div>
+  </Link>
+)
+
+const University: React.FC = () => {
+    const [department, setDepartment] = useState<IDepartment[]>([]);
+
+  const router = useRouter()
+  const { id } = router.query
+
+  useEffect(() => {
+    const fetchDepartment = async () => {
+      const res = await fetch(`/api/departments/${id}`)
+      const data = await res.json()
+
+      if (data.success) {
+        setDepartment(data.data)
+      } else {
+        toast.error(data.message)
+      }
+    }
+
+    fetchDepartment()
+  }, [id])
+
+  return (
+    <Layout>
+      <div className="flex flex-col space-y-3">
+        <div className="flex w-full justify-between items-center">
+          <h1 className="text-2xl font-semibold text-blue-500">Departments</h1>
+        </div>
+        <div className="flex flex-col md:flex-row justify-between md:w-full gap-3">
+            {department.map((department) => (
+                <Cards key={department._id as Key} department={department} />
+            ))}
+        </div>
+      </div>
+      <Toaster />
+    </Layout>
+  )
+}
+
+export default University

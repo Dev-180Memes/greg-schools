@@ -3,6 +3,9 @@ import { ApiResponse } from "@/types/types";
 import handleError from "@/utils/handleError";
 import sendUniRegister from "@/utils/sendUniRegister";
 import Admin from "@/models/admin.model";
+import connectDb from "@/utils/connectDb";
+
+connectDb();
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<ApiResponse>) => {
     if (req.method === "POST") {

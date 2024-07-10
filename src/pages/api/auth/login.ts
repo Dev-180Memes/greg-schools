@@ -36,6 +36,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<UserApiResponse
         } catch (error) {
             return handleError(req, res, error);
         }
+    } else if (req.method === "GET") {
+        // Get all users
+        const users = await User.find().populate("university");
+        if (!users) {
+            return res.status(404).json({ success: false, message: "No users found" });
+        }
+
+        return res.status(200).json({ success: true, users: users });
     }
 
     return res.status(405).json({ success: false, message: "Method not allowed" });

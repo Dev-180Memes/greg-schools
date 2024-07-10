@@ -1,5 +1,10 @@
 import { ISchool } from "@/models/school.model";
 import { IUser } from "@/models/user.model";
+import { ICollegeFaculty } from "@/models/collegeFaculty.model";
+import { IDepartment } from "@/models/department.model";
+import { ILevel } from "@/models/level.model";
+import { ICourse } from "@/models/course.model";
+import { IMaterial } from "@/models/material.model";
 
 export interface Material {
     id: number;
@@ -68,4 +73,41 @@ export interface UserApiResponse {
     success: boolean;
     message?: string;
     token?: string;
+    users?: IUser[];
+}
+
+export interface FetchUserResponse {
+    success: boolean;
+    message?: string;
+    data?: IUser;
+}
+
+export interface CollegeFacultyApiResponse {
+    success: boolean;
+    message?: string;
+    data?: ICollegeFaculty[];
+}
+
+export interface DepartmentApiResponse {
+    success: boolean;
+    message?: string;
+    data?: IDepartment[];
+}
+
+export interface LevelApiResponse {
+    success: boolean;
+    message?: string;
+    data?: ILevel[];
+}
+
+export interface CourseApiResponse {
+    success: boolean;
+    message?: string;
+    data?: ICourse[];
+}
+
+export interface MaterialApiResponse {
+    success: boolean;
+    message?: string;
+    data?: IMaterial[];
 }

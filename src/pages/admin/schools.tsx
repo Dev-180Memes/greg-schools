@@ -97,6 +97,7 @@ const Schools: React.FC = () => {
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">College/Faculty</th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Departments</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Materials</th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date Registered</th>
                                     </tr>
                                 </thead>
@@ -106,6 +107,7 @@ const Schools: React.FC = () => {
                                             <td className="px-6 py-4">{school?.name}</td>
                                             <td className="px-6 py-4">{school?.collegeFaculty}</td>
                                             <td className="px-6 py-4">{school?.departments}</td>
+                                            <td className="px-6 py-4">{school?.materials}</td>
                                             <td className="px-6 py-4">{school?.dateRegistered.toString().split("T")[0]}</td>
                                         </tr>
                                     ))}

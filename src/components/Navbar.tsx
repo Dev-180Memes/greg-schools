@@ -31,8 +31,8 @@ const Navbar: React.FC = () => {
           </li>
         </ul>
         <div className="hidden md:flex items-center space-x-4">
-          <Link href="#" className="text-[#55B5DE] border px-4 py-2 rounded-full border-[#55B5DE] font-bold">Login</Link>
-          <Link href="#" className="bg-[#55B5DE] text-white px-4 py-2 rounded-full">Sign Up</Link>
+          <Link href="/auth/login" className="text-[#55B5DE] border px-4 py-2 rounded-full border-[#55B5DE] font-bold">Login</Link>
+          <Link href="/auth/signup" className="bg-[#55B5DE] text-white px-4 py-2 rounded-full">Sign Up</Link>
         </div>
         <div className="flex items-center space-x-4 md:hidden">
             <button onClick={toggleMenu} className='focus:outline-none'>
@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
             <Link href="#" className="text-[#4A4A4A] font-bold">Contact</Link>
           </li>
           <li>
-            <Link href={"#"} className='text-[#55B5DE] border px-4 py-2 rounded-full border-[#55B5DE]'>Login</Link>
+            <Link href={"/auth/login"} className='text-[#55B5DE] border px-4 py-2 rounded-full border-[#55B5DE]'>Login</Link>
           </li>
         </ul>
     </nav>
