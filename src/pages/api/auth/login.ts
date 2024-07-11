@@ -22,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<UserApiResponse
                 return res.status(404).json({ success: false, message: "User not found" });
             }
 
-            const isMatch = await user.comparePassword(password);
+            const isMatch = user.password === password;
 
             if (!isMatch) {
                 return res.status(401).json({ success: false, message: "Invalid credentials" });
