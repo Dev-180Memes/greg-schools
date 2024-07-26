@@ -21,13 +21,13 @@ const Navbar: React.FC = () => {
             <Link href="#" className="text-[#4A4A4A] font-bold">Home</Link>
           </li>
           <li className="text-center py-2 md:py-0">
-            <Link href="#" className="text-[#4A4A4A] font-bold">About</Link>
+            <Link href="#about" className="text-[#4A4A4A] font-bold">About</Link>
           </li>
           <li className="text-center py-2 md:py-0">
-            <Link href="#" className="text-[#4A4A4A] font-bold">Services</Link>
+            <Link href="#services" className="text-[#4A4A4A] font-bold">Services</Link>
           </li>
           <li className="text-center py-2 md:py-0">
-            <Link href="#" className="text-[#4A4A4A] font-bold">Contact</Link>
+            <Link href="#contact" className="text-[#4A4A4A] font-bold">Contact</Link>
           </li>
         </ul>
         <div className="hidden md:flex items-center space-x-4">

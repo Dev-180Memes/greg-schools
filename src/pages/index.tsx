@@ -91,7 +91,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-12 px-6 md:px-12 bg-white">
+      <section className="py-12 px-6 md:px-12 bg-white" id='about'>
         <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
           <div className="md:w-1/2 flex justify-center md:justify-start mb-8 md:mb-0">
             <div className="relative border-2 border-[#55B5DE] rounded-full p-3 ">
@@ -130,7 +130,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-12 px-6 bg-white md:px-12">
+      <section className="py-12 px-6 bg-white md:px-12" id='services'>
         <div className="container mx-auto px-6 flex flex-col items-center jsutify-between md:flex-row">
           <div className="md:w-1/2 flex flex-col justify-center md:justify-start mb-8 md:mb-0">
             <Image 
@@ -248,7 +248,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-12 px-6 md:py-12 bg-white">
+      <section className="py-12 px-6 md:py-12 bg-white" id='contact'>
         <div className="container mx-auto px-6 flex">
           <div className="w-full md:w-1/2">
             <h2 className="text-center md:text-left text-2xl font-bold mb-8 text-blue-500">Send us a message</h2>
