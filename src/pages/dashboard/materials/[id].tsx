@@ -37,19 +37,20 @@ const University: React.FC = () => {
   const router = useRouter()
   const { id } = router.query
 
-  useEffect(() => {
-    const fetchMaterials = async () => {
-        if (!id) return
-      const res = await fetch(`/api/materials/${id}`)
-      const data = await res.json()
+  const fetchMaterials = async () => {
+      if (!id) return
+    const res = await fetch(`/api/materials/${id}`)
+    const data = await res.json()
 
-      if (data.success) {
-        // console.log(data.data)
-        setMaterials(data.data)
-      } else {
-        toast.error(data.message)
-      }
+    if (data.success) {
+      // console.log(data.data)
+      setMaterials(data.data)
+    } else {
+      toast.error(data.message)
     }
+  }
+
+  useEffect(() => {
 
     fetchMaterials()
   }, [id])
@@ -59,6 +60,19 @@ const University: React.FC = () => {
       <div className="flex flex-col space-y-3">
         <div className="flex w-full justify-between items-center">
           <h1 className="text-2xl font-semibold text-blue-500">Materials</h1>
+          <input 
+            type="text" 
+            placeholder="Search for resources"
+            className="px-2 py-1 w-1/2 md:w-1/4 border border-gray-400 rounded-md focus:outline-none"
+            onChange={(e) => {
+              if (e.target.value === '') {
+                fetchMaterials()
+              } else {
+                const filterFaculty = materials.filter((material) => material.name.toLowerCase().includes(e.target.value.toLowerCase()))
+                setMaterials(filterFaculty)
+              }
+            }}
+          />
         </div>
         <div className="flex flex-col md:flex-row justify-between md:w-full gap-3">
             {materials.map((material) => (

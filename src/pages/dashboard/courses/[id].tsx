@@ -31,18 +31,19 @@ const University: React.FC = () => {
   const router = useRouter()
   const { id } = router.query
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-        if (!id) return
-      const res = await fetch(`/api/courses/${id}`)
-      const data = await res.json()
+  const fetchCourses = async () => {
+      if (!id) return
+    const res = await fetch(`/api/courses/${id}`)
+    const data = await res.json()
 
-      if (data.success) {
-        setCourses(data.data)
-      } else {
-        toast.error(data.message)
-      }
+    if (data.success) {
+      setCourses(data.data)
+    } else {
+      toast.error(data.message)
     }
+  }
+  
+  useEffect(() => {
 
     fetchCourses()
   }, [id])
@@ -52,6 +53,19 @@ const University: React.FC = () => {
       <div className="flex flex-col space-y-3">
         <div className="flex w-full justify-between items-center">
           <h1 className="text-2xl font-semibold text-blue-500">Courses</h1>
+          <input 
+            type="text" 
+            placeholder="Search for Courses"
+            className="px-2 py-1 w-1/2 md:w-1/4 border border-gray-400 rounded-md focus:outline-none"
+            onChange={(e) => {
+              if (e.target.value === '') {
+                fetchCourses()
+              } else {
+                const filterFaculty = courses.filter((course) => course.name.toLowerCase().includes(e.target.value.toLowerCase()))
+                setCourses(filterFaculty)
+              }
+            }}
+          />
         </div>
         <div className="flex flex-col md:flex-row justify-between md:w-full gap-3">
             {courses.map((course) => (

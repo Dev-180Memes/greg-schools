@@ -58,20 +58,20 @@ const UserDashboard: React.FC = () => {
   const [fileName, setFileName] = useState<string>("");
 
   const router = useRouter();
+  
+  const fetchUniversities = async () => {
+    const res = await fetch('/api/admin/schools');
+
+    const data = await res.json();
+
+    if (data.success) {
+      setUniversities(data.data);
+    } else {
+      toast.error(data.message);
+    }
+  }
 
   useEffect(() => {
-    const fetchUniversities = async () => {
-      const res = await fetch('/api/admin/schools');
-
-      const data = await res.json();
-
-      if (data.success) {
-        setUniversities(data.data);
-      } else {
-        toast.error(data.message);
-      }
-    }
-
     fetchUniversities();
   }, [])
 
@@ -325,6 +325,21 @@ const UserDashboard: React.FC = () => {
       <div className="flex flex-col space-y-3">
         <div className="flex w-full justify-between items-center">
           <h1 className="text-2xl font-semibold text-blue-500">Dashboard</h1>
+          {/* search bar */}
+          <input 
+            type="text" 
+            placeholder="Search schools" 
+            className="border border-gray-300 rounded-lg p-2 w-1/3"
+            onChange={(e) => {
+              if (e.target.value === "") {
+                fetchUniversities();
+              } else {
+                const filteredUniversities = universities.filter((university) => university.name.toLowerCase().includes(e.target.value.toLowerCase()));
+                setUniversities(filteredUniversities);
+              }
+
+            }}
+          />
           <button 
             onClick={() => setShowAddMaterial(true)}
             className="bg-blue-500 text-white px-3 py-1 rounded-lg"

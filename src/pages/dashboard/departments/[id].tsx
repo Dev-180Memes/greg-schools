@@ -32,26 +32,39 @@ const University: React.FC = () => {
   const router = useRouter()
   const { id } = router.query
 
-  useEffect(() => {
-    const fetchDepartment = async () => {
-      const res = await fetch(`/api/departments/${id}`)
-      const data = await res.json()
+  const fetchDepartment = async () => {
+    const res = await fetch(`/api/departments/${id}`)
+    const data = await res.json()
 
-      if (data.success) {
-        setDepartment(data.data)
-      } else {
-        toast.error(data.message)
-      }
+    if (data.success) {
+      setDepartment(data.data)
+    } else {
+      toast.error(data.message)
     }
+  }
 
+  useEffect(() => {
     fetchDepartment()
-  }, [id])
+  }, [])
 
   return (
     <Layout>
       <div className="flex flex-col space-y-3">
         <div className="flex w-full justify-between items-center">
           <h1 className="text-2xl font-semibold text-blue-500">Departments</h1>
+          <input 
+            type="text" 
+            placeholder="Search for departments"
+            className="px-2 py-1 w-1/2 md:w-1/4 border border-gray-400 rounded-md focus:outline-none"
+            onChange={(e) => {
+              if (e.target.value === '') {
+                fetchDepartment()
+              } else {
+                const filterFaculty = department.filter((department) => department.name.toLowerCase().includes(e.target.value.toLowerCase()))
+                setDepartment(filterFaculty)
+              }
+            }}
+          />
         </div>
         <div className="flex flex-col md:flex-row justify-between md:w-full gap-3">
             {department.map((department) => (
