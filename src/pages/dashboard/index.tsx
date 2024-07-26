@@ -56,6 +56,7 @@ const UserDashboard: React.FC = () => {
   const [materialName, setMaterialName] = useState<string>("");
   const [fileUrl, setFileUrl] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
+  const [category, setCategory] = useState<'pq' | 'notes'>("notes");
 
   const router = useRouter();
   
@@ -296,6 +297,7 @@ const UserDashboard: React.FC = () => {
     const data = {
       name: materialName,
       course: selectedCourse,
+      category,
       fileUrl,
     };
 
@@ -376,6 +378,19 @@ const UserDashboard: React.FC = () => {
                   {universities.map((university) => (
                     <option key={university?._id as Key} value={university?._id as string}>{university?.name}</option>
                   ))}
+                </select>
+              </div>
+              <div className="flex flex-col w-full space-y-2">
+                <label htmlFor="faculty" className="text-sm font-medium text-gray-500">Category</label>
+                <select 
+                  name="category" 
+                  id="category" 
+                  className="border border-gray-300 rounded-lg p-2 w-full"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value as 'pq' | 'notes')}
+                >
+                  <option value="pq">Past Questions</option>
+                  <option value="notes">Notes</option>
                 </select>
               </div>
               <div className="flex flex-col w-full space-y-2">

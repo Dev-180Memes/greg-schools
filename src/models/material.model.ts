@@ -3,6 +3,7 @@ import mongoose, { Schema, Document, Model, ObjectId } from "mongoose";
 export interface IMaterial extends Document {
     name: string;
     course: ObjectId;
+    category: 'pq' | 'notes';
     fileUrl: string;
     dateRegistered: Date;
 }
@@ -15,6 +16,11 @@ const MaterialSchema: Schema<IMaterial> = new Schema({
     course: {
         type: Schema.Types.ObjectId,
         ref: "Course",
+        required: true,
+    },
+    category: {
+        type: String,
+        enum: ['pq', 'notes'],
         required: true,
     },
     fileUrl: {

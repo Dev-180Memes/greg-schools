@@ -10,14 +10,27 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<MaterialApiResp
 
     if (req.method === "POST") {
         try {
-            const { name, course, fileUrl } = req.body;
+            const { name, course, category, fileUrl } = req.body;
 
             if (!name || !course || !fileUrl) {
                 return res.status(400).json({ success: false, message: "All fields are required" });
             }
 
+            if (category !== "pq" && category !== "notes") {
+                return res.status(400).json({ success: false, message: "Invalid category" });
+            }
+
+            let filename: string;
+
+            if (category === "pq") {
+                filename = `Past Questions - ${name}`;
+            } else {
+                filename = `Notes - ${name}`;
+            }
+
             const material = new Material({
-                name,
+                name: filename,
+                category,
                 course,
                 fileUrl,
             });
