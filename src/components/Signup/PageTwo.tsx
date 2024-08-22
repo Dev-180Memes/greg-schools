@@ -31,7 +31,7 @@ const SignupPageTwo = ({
                 >
                     <option value="">Select University</option>
                     {schools.map((school) => (
-                        <option key={school._id} value={school._id}>{school.name}</option>
+                        <option key={school._id as string} value={school._id as string}>{school.name}</option>
                     ))}
                 </select>
                 <div className="flex flex-end justify-end text-sm text-blue-500">
