@@ -336,7 +336,7 @@ const UserDashboard: React.FC = () => {
             <input 
               type="text"  
               placeholder="Search schools" 
-              className="border border-gray-300 w-fit rounded-lg p-2 w-1/3"
+              className="border border-gray-300 rounded-lg p-2 w-1/3"
               onChange={(e) => {
                 if (e.target.value === "") {
                   fetchUniversities();
@@ -357,10 +357,8 @@ const UserDashboard: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {universities.map((university) => (
             <Cards 
-              key={university._id}
+              key={university._id as Key}
               university={university}
-              
-              
             />
           ))}
         </div>
@@ -414,7 +412,7 @@ const UserDashboard: React.FC = () => {
                 {/* Dropdown to select from existing options or add new option field */}
                   <option value="">Select College/Faculty</option>
                   {collegeFaculty.map((faculty) => (
-                    <option key={faculty._id} value={faculty._id}>{faculty.name}</option>
+                    <option key={faculty?._id as Key} value={faculty._id as string}>{faculty.name}</option>
                   ))}
                 </select>
                 <button 
@@ -434,7 +432,7 @@ const UserDashboard: React.FC = () => {
                 {/* Dropdown to select from existing options or add new option field */}
                   <option value="">Select Department</option>
                   {departments.map((department) => (
-                    <option key={department._id} value={department._id}>{department.name}</option>
+                    <option key={department._id as string} value={department._id as string}>{department.name}</option>
                   ))}
                 </select>
                 <button 
@@ -454,7 +452,7 @@ const UserDashboard: React.FC = () => {
                 {/* Dropdown to select from existing options or add new option field */}
                   <option value="">Select Level</option>
                   {levels.map((level) => (
-                    <option key={level._id} value={level._id}>{level.name}</option>
+                    <option key={level._id as string} value={level._id as string}>{level.name}</option>
                   ))}
                 </select>
                 <button
@@ -474,7 +472,7 @@ const UserDashboard: React.FC = () => {
                 {/* Dropdown to select from existing options or add new option field */}
                   <option value="">Select Course</option>
                   {courses.map((course) => (
-                    <option key={course._id} value={course._id}>{course.name}</option>
+                    <option key={course._id as string} value={course._id as string}>{course.name}</option>
                   ))}
                 </select>
                 <button
