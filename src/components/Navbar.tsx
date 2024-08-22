@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
         setMenuOpen(!menuOpen)
     }
   return (
-    <nav className="flex items-center justify-between px-6 py-2 md:px-16 bg-white">
+    <nav className="flex items-center justify-between px-6 py-3 md:px-16 bg-white border-b-2 border-blue-300">
         <Image 
           src={'/images/logo.png'}
           alt="Logo"

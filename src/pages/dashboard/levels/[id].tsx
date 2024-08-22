@@ -11,7 +11,7 @@ interface UniversityProps {
 }
 
 const Cards: React.FC<UniversityProps> = ({ level }) => (
-  <Link href={`/dashboard/courses/${level._id}`} className='bg-gray-200 p-5 w-full md:w-1/2 rounded-lg'>
+  <Link href={`/dashboard/courses/${level._id}`} className='bg-gray-200 p-5 w-full rounded-lg'>
     <div className="w-full flex justify-center items-center">
       <div className="mb-4 bg-red-500 p-4 text-white rounded-lg">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-20 ">
@@ -52,7 +52,7 @@ const University: React.FC = () => {
         <div className="flex w-full justify-between items-center">
           <h1 className="text-2xl font-semibold text-blue-500">Levels</h1>
         </div>
-        <div className="flex flex-col md:flex-row justify-between md:w-full gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {levels.map((level) => (
               <Cards key={level._id as Key} level={level} />
           ))}

@@ -11,7 +11,7 @@ interface UniversityProps {
 }
 
 const Cards: React.FC<UniversityProps> = ({ material }) => (
-  <div className='bg-gray-200 p-5 w-full md:w-1/3 rounded-lg'>
+  <div className='bg-gray-200 p-5 w-full rounded-lg'>
     <div className="w-full flex justify-center items-center">
       <div className="mb-4 bg-yellow-500 p-4 text-white rounded-lg">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-16">
@@ -74,7 +74,7 @@ const University: React.FC = () => {
             }}
           />
         </div>
-        <div className="flex flex-col md:flex-row justify-between md:w-full gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {materials.map((material) => (
               <Cards key={material._id as Key} material={material} />
             ))}

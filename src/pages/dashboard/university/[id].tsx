@@ -11,7 +11,7 @@ interface UniversityProps {
 }
 
 const Cards: React.FC<UniversityProps> = ({ faculty }) => (
-  <Link href={`/dashboard/departments/${faculty._id}`} className='bg-gray-200 p-5 w-full md:w-1/3 rounded-lg'>
+  <Link href={`/dashboard/departments/${faculty._id}`} className='bg-gray-200 p-5 w-full rounded-lg'>
     <div className="px-2 py-2 w-full flex justify-center items-center rounded-full">
       <Image 
         src={"/images/funaab.png"}
@@ -67,7 +67,7 @@ const University: React.FC = () => {
             }}
           />
         </div>
-        <div className="flex flex-col md:flex-row justify-between md:w-full gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {faculty.map((faculty) => (
             <Cards key={faculty._id as Key} faculty={faculty} />
           ))}

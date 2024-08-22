@@ -18,7 +18,7 @@ interface CardProps {
 }
 
 const Cards: React.FC<CardProps> = ({ university }) => (
-  <Link href={`/dashboard/university/${university._id}`} className='bg-gray-200 p-5 w-full md:w-1/3 rounded-lg'>
+  <Link href={`/dashboard/university/${university._id}`} className='bg-gray-200 p-5 w-full rounded-lg'>
     <div className="px-2 py-2 w-full flex justify-center items-center rounded-full">
       <Image 
         src={"/images/funaab.png"}
@@ -325,33 +325,42 @@ const UserDashboard: React.FC = () => {
   return (
     <Layout>
       <div className="flex flex-col space-y-3">
-        <div className="flex w-full justify-between items-center">
+        <div className="flex w-full justify-between items-start">
+           <div>
           <h1 className="text-2xl font-semibold text-blue-500">Dashboard</h1>
-          {/* search bar */}
-          <input 
-            type="text" 
-            placeholder="Search schools" 
-            className="border border-gray-300 rounded-lg p-2 w-1/3"
-            onChange={(e) => {
-              if (e.target.value === "") {
-                fetchUniversities();
-              } else {
-                const filteredUniversities = universities.filter((university) => university.name.toLowerCase().includes(e.target.value.toLowerCase()));
-                setUniversities(filteredUniversities);
-              }
+          </div>
 
-            }}
-          />
-          <button 
-            onClick={() => setShowAddMaterial(true)}
-            className="bg-blue-500 text-white px-3 py-1 rounded-lg"
-          >Add Material</button>
+
+           <div className='flex flex-col items-end gap-2 justify-end'>
+            {/* search bar */}
+            <input 
+              type="text"  
+              placeholder="Search schools" 
+              className="border border-gray-300 w-fit rounded-lg p-2 w-1/3"
+              onChange={(e) => {
+                if (e.target.value === "") {
+                  fetchUniversities();
+                } else {
+                  const filteredUniversities = universities.filter((university) => university.name.toLowerCase().includes(e.target.value.toLowerCase()));
+                  setUniversities(filteredUniversities);
+                }
+
+              }}
+            />
+            <button 
+              onClick={() => setShowAddMaterial(true)}
+              className="bg-blue-500 w-fit text-white px-3 py-1 rounded-lg">
+            Add Material
+            </button>
+          </div>
         </div>
-        <div className="flex flex-col md:flex-row justify-between md:w-full gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {universities.map((university) => (
             <Cards 
               key={university._id}
               university={university}
+              
+              
             />
           ))}
         </div>
