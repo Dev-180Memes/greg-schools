@@ -1,5 +1,6 @@
 import React from 'react'
 import { SignupPageTwoProps } from '@/types/types';
+import Link from 'next/link';
 
 const SignupPageTwo = ({
     schools,
@@ -33,6 +34,9 @@ const SignupPageTwo = ({
                         <option key={school._id} value={school._id}>{school.name}</option>
                     ))}
                 </select>
+                <div className="flex flex-end justify-end text-sm text-blue-500">
+                    <Link href={"/auth/university"}>Register New University</Link>
+                </div>
             </div>
         </div>
         <div>

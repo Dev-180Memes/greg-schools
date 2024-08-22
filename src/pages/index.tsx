@@ -7,6 +7,11 @@ import Image from 'next/image';
 const Home: React.FC = () => {
   return (
     <div>
+           <style jsx global>{`
+        html {
+          scroll-behavior: smooth;
+        }
+      `}</style>
       <Navbar />
       <section className="flex flex-col-reverse md:flex-row items-center justify-between p-6 md:p-12 md:h-[85vh] bg-white">
         <div className="text-center md:text-left md:w-1/2 flex flex-col space-y-5 items-center md:items-start">
@@ -17,7 +22,7 @@ const Home: React.FC = () => {
           <p className="text-gray-700">
             The Ultimate Collaboration Hub for Students and Lecturers to Expand Knowledge and Sharpen Skills.
           </p>
-          <Link href={"#"} className='bg-[#55B5DE] text-white px-6 py-3 rounded-full font-bold w-fit'>
+          <Link href={"/auth/signup"} className='bg-[#55B5DE] text-white px-6 py-3 rounded-full font-bold w-fit hover:bg-white hover:text-blue-400 hover:border hover:border-blue-400'>
             Get Started
           </Link>
         </div>
@@ -117,7 +122,7 @@ const Home: React.FC = () => {
           </div>
           <div className="md:w-1/2 text-center md:text-left">
             <h2 className="text-3xl font-bold mb-4">
-              <span className="text-blue-400">About</span> Us
+              <span className="text-blue-400">About Us</span> 
             </h2>
             <p className="text-gray-700 mb-4">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum at voluptatum eius fugiat dolor, ipsa iste impedit exercitationem molestias quia.

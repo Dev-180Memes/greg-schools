@@ -18,21 +18,21 @@ const Navbar: React.FC = () => {
         />
         <ul className={`hidden md:flex items-center space-x-5`}>
           <li className="text-center py-2 md:py-0">
-            <Link href="#" className="text-[#4A4A4A] font-bold">Home</Link>
+            <Link href="#" className="text-[#4A4A4A] font-bold hover:bg-blue-400 hover:text-white  py-2 px-5 rounded-3xl ">Home</Link>
           </li>
           <li className="text-center py-2 md:py-0">
-            <Link href="#about" className="text-[#4A4A4A] font-bold">About</Link>
+            <Link href="#about" className="text-[#4A4A4A] font-bold hover:bg-blue-400 hover:text-white  py-2 px-5 rounded-3xl ">About</Link>
           </li>
           <li className="text-center py-2 md:py-0">
-            <Link href="#services" className="text-[#4A4A4A] font-bold">Services</Link>
+            <Link href="#services" className="text-[#4A4A4A] font-bold hover:bg-blue-400 hover:text-white  py-2 px-5 rounded-3xl ">Services</Link>
           </li>
           <li className="text-center py-2 md:py-0">
-            <Link href="#contact" className="text-[#4A4A4A] font-bold">Contact</Link>
+            <Link href="#contact" className="text-[#4A4A4A] font-bold hover:bg-blue-400 hover:text-white  py-2 px-5 rounded-3xl ">Contact</Link>
           </li>
         </ul>
         <div className="hidden md:flex items-center space-x-4">
-          <Link href="/auth/login" className="text-[#55B5DE] border px-4 py-2 rounded-full border-[#55B5DE] font-bold">Login</Link>
-          <Link href="/auth/signup" className="bg-[#55B5DE] text-white px-4 py-2 rounded-full">Sign Up</Link>
+          <Link href="/auth/login" className="text-[#55B5DE] border px-4 py-2 rounded-full border-[#55B5DE] font-bold hover:bg-blue-400 hover:text-white">Login</Link>
+          <Link href="/auth/signup" className="bg-[#55B5DE] text-white px-4 py-2 rounded-full hover:bg-white hover:text-blue-400 hover:border hover:border-blue-400">Sign Up</Link>
         </div>
         <div className="flex items-center space-x-4 md:hidden">
             <button onClick={toggleMenu} className='focus:outline-none'>
